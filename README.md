@@ -1,37 +1,41 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Invoice Wizard
+
+A Next.js application to convert CTC trip CSV exports into Medicare Transit Inc. formatted Excel invoices.
+
+## Features
+- **CSV Parsing**: robust parsing of CTC export CSVs using `papaparse`.
+- **Excel Generation**: exact replication of the "Invoice (2)" template layout, styles, and formulas using `exceljs`.
+- **Preview**: Client-side preview of the first 5 mapped rows before generation.
+- **Secure**: All processing happens in logic, no external database required.
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+- Node.js 18+
+- npm
 
+### Installation
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Running Locally
+```bash
+npm run dev
+```
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Generating an Invoice
+1. Open the app.
+2. Upload a CTC trips CSV file (e.g., from `fixtures/`).
+3. Verify the preview data in the table.
+4. Click "Generate Invoice XLS".
+5. The file will download with the default prefix.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# invoice-wizard
+## Verification
+To verify that the generated output strictly matches the required template format:
+```bash
+# Verify the core generation logic
+npx tsx scripts/verify-template-match.ts
+```
+This script generates a test invoice from `fixtures/ctc_trips12_29-to-1_18.csv` and compares it against `assets/templates/MEDICARETRANSITINC_20251201-20260131.xlsx`.
